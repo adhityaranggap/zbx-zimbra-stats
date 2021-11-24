@@ -18,28 +18,28 @@ function get_bytes(){
 
 case "$1" in
     total_received)
-        /opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=received)'| sed -e 's/^\s*//' -e '/^$/d'
+        /opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=received)'| sed -e 's/^\s*//' -e '/^$/d'
     ;;
     total_delivered)
-        /opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=delivered)'| sed -e 's/^\s*//' -e '/^$/d'
+        /opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=delivered)'| sed -e 's/^\s*//' -e '/^$/d'
     ;;
     total_bdelivered)
-	delivered=$(/opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes delivered)'| sed -e 's/^\s*//' -e '/^$/d')
+	delivered=$(/opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes delivered)'| sed -e 's/^\s*//' -e '/^$/d')
 	get_bytes $delivered
     ;;
     total_breceived)
-	received=$(/opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes received)'| sed -e 's/^\s*//' -e '/^$/d')
+	received=$(/opt/zimbra/common/bin/pflogsumm.pl -d yesterday /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes received)'| sed -e 's/^\s*//' -e '/^$/d')
 	get_bytes $received
     ;;
     received|delivered|forwarded|deferred|bounced|rejected)
-        /opt/zimbra/common/bin/pflogsumm.pl -d today /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?='$1')'| sed -e 's/^\s*//' -e '/^$/d'
+        /opt/zimbra/common/bin/pflogsumm.pl -d today /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?='$1')'| sed -e 's/^\s*//' -e '/^$/d'
     ;;
     breceived)
-        received=$(/opt/zimbra/common/bin/pflogsumm.pl -d today /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes received)'| sed -e 's/^\s*//' -e '/^$/d')
+        received=$(/opt/zimbra/common/bin/pflogsumm.pl -d today /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes received)'| sed -e 's/^\s*//' -e '/^$/d')
 	get_bytes $received
     ;;
     bdelivered)
-        delivered=$(/opt/zimbra/common/bin/pflogsumm.pl -d today /var/log/mail.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes delivered)'| sed -e 's/^\s*//' -e '/^$/d')
+        delivered=$(/opt/zimbra/common/bin/pflogsumm.pl -d today /var/log/zimbra.log --detail 0 | grep -m 1 -o -P '(?<= ).*(?=bytes delivered)'| sed -e 's/^\s*//' -e '/^$/d')
         get_bytes $delivered
     ;;
 esac
